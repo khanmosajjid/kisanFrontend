@@ -180,19 +180,20 @@ const Dashboard = () => {
     }); //set continous
 
     useEffect(() => {
-      setVals();
-      getTotalstkd();
-      getPositions();
-      console.log("wallet account is----->",walletAccount)
-      if (walletAccount && rightNet) {
-        getPositions();
-        setBal();
-      }
       if (!walletAccount) {
         (async () => {
           if (localStorage.getItem("walletConnected")) await reconWallet();
         })();
       }
+      setVals();
+      getTotalstkd();
+      getPositions();
+      console.log("wallet account is----->",walletAccount)
+      if (walletAccount && rightNet) {
+        // getPositions();
+        setBal();
+      }
+      
     },[walletAccount]); //set continous
 
   // stake tokens
@@ -241,70 +242,24 @@ const Dashboard = () => {
     console.log("contract of referral contract is-->",contract)
     let totalStkd = await contract.methods.owner().call();
     let UserStakedBalance=0;
-
-    for (let i = 0; i < 1000; i++) {
-      console.log("i---->",i);
-      try {
-        let referral1 = await contract.methods.userReferrers(walletAccount,i).call();
-        console.log("referrers1 is---->",referral1);
-        for(let i=0;i<4;i++){
-
-          let poolData = await contract.methods
-          .pools(i)
-          .call();
-        
-        if (poolData.poolIsInitialized == false) {
-          continue;
-        }
-
-          let stakingBalance = await contract.methods
-          .getUserInfo(i, referral1)
-          .call();
-          console.log("user info is-->",(stakingBalance.userStakedBalance)/1000000000000000000);
-
-          UserStakedBalance=parseInt(UserStakedBalance)+parseInt(stakingBalance.userStakedBalance);
-          console.log("USer total Staked Balance is---->",UserStakedBalance/1000000000000000000);
-          try{
-            let level2Referral= await contract.methods.userReferrers(referral1,0).call();
-            for(let i=0;i<4;i++){
-
-              let poolData = await contract.methods
-              .pools(i)
-              .call();
-            
-            if (poolData.poolIsInitialized == false) {
-              continue;
-            }
-    
-              let stakingBalance = await contract.methods
-              .getUserInfo(i, level2Referral)
-              .call();
-              console.log("user info is-->",(stakingBalance.userStakedBalance)/1000000000000000000);
-    
-              UserStakedBalance=parseInt(UserStakedBalance)+parseInt(stakingBalance.userStakedBalance);
-              console.log("USer total Staked Balance is after 2nd level is---->",UserStakedBalance/1000000000000000000);
-              setUserTotalReferralStakedBalance(UserStakedBalance/1000000000000000000);
-              
-    
-            }
-          }catch(e){
-            console.log("error in level2 referral--->",e);
-          }
-
-        }
-       
-        
-      } catch (err) {
-        console.log("Error:", err,i);
-        break;
+    try{
+      if(walletAccount){
+        let userBalance=await contract.methods.userBalances(walletAccount).call();
+        console.log("user Balances is---->",userBalance);
+        setUserTotalReferralStakedBalance(userBalance);
       }
+       
+    }catch(e){
+       console.log("error in balance fetching is--->",userBalance);
     }
+
+    
     if(walletAccount){
       try{
         // const { walletAddress, balance }
         let data={
           walletAddress:walletAccount,
-          balance:UserStakedBalance/1000000000000000000
+          balance:UserStakedBalance
         }
         let addcat=await addUserCategory(data);
         console.log("result of addCat is---->",addcat);

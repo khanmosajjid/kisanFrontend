@@ -89,6 +89,7 @@ const StakingPage = () => {
 
   // set values in the stake modal
   const setVals = async () => {
+    console.log("modal item is---->",modalItem);
     if (modalItem) {
       setAmount(modalItem.min_deposit);
       setpoolId(modalItem.poolId);
@@ -187,6 +188,7 @@ const StakingPage = () => {
     setBal();
     if (walletAccount && rightNet) {
       getPositions();
+      setVals();
       
     }
     
@@ -194,10 +196,14 @@ const StakingPage = () => {
 
   // stake tokens
   const stake = async () => {
+    let poolid=parseInt(modalItem.poolId)
+    console.log("modal data item is---->",modalItem);
     let contract = await getReferralContract(providerInsatnce);
     let poolData = await contract.methods
-      .pools(poolIndex)
+      .pools(poolid)
       .call({ from: walletAccount });
+
+      console.log("pool data is---->",poolData,modalItem.poolId,typeof modalItem.poolId)
 
     let amount = document.getElementById("amtInput").value;
 
@@ -207,8 +213,8 @@ const StakingPage = () => {
     }
 
     
-    if (+amount < +(poolData.minimumDeposit)/(1000000000000000000)) {
-      toast.info(`Input Min of ${(poolData.minimumDeposit)/(1000000000000000000)}`);
+    if (+amount < +(poolData.minimumDeposit)) {
+      toast.info(`Input Min of ${(poolData.minimumDeposit)}`);
       return;
     }
 
@@ -249,7 +255,7 @@ const StakingPage = () => {
         .then(async (res) => {
           if (res) {
             let stake = await contract.methods
-              .stake(amount, poolIndex, referrer)
+              .stake(amount, poolid, referrer)
               .send({ from: walletAccount, gasLimit: 300000 });
             console.log("stake result is---->", stake);
           }
@@ -261,7 +267,7 @@ const StakingPage = () => {
     } catch (error) {
       console.log("error is----->", error);
       let state = await contract.methods
-        .getPoolInfo(poolIndex)
+        .getPoolInfo(modalItem.poolId)
         .call({ from: walletAccount });
       console.log({ state });
       if (await state) {
@@ -296,6 +302,7 @@ const StakingPage = () => {
           toast.success(`Claiming Successful`);
           setLoading(false);
         });
+        console.log("claim reward--->",claimreward);
       setLoading(false);
     } catch (error) {
       console.log(error);
@@ -467,11 +474,13 @@ const StakingPage = () => {
     }
   };
   const handleClaimReward = async (ppId) => {
-    if (!pId) {
+    console.log("pid is---->",ppId)
+    if (ppId==undefined||ppId=="undefined") {
       toast.error("Please enter a pool ID.");
       return;
     }
     try {
+      console.log("wallet11111 account is---->",walletAccount)
       let contract = await getReferralContract(providerInsatnce);
       let reward = await contract.methods
         .calculateUserRewards(walletAccount, ppId)
@@ -481,6 +490,7 @@ const StakingPage = () => {
         toast.error("Reward is too small to claim");
         return;
       }
+      console.log("wallet account is---->",walletAccount)
       let claim = await contract.methods
         .claimReward(ppId)
         .send({ from: walletAccount, gasLimit: 300000 });
@@ -831,22 +841,23 @@ const StakingPage = () => {
                             let contract = await getReferralContract(
                               providerInsatnce
                             );
+                          
                             let poolData = await contract.methods
                               .unstake(pool.poolId)
-                              .call({ from: walletAccount });
-                              console.log("pool data is")
+                              .send({ from: walletAccount, gasLimit: 300000 });
+                              console.log("pool data is",poolData)
                             // if (poolData.poolIsInitialized == false) {
                             //   toast.error(`Pool Is Not Active`);
 
                             //   return;
-                            // } else {
+                            // } else {,
                             //   console.log({ pool });
                             //   setModalItem(pool);
                             // }
                           }}
                         >
                           {" "}
-                          Unstake{" "}
+                          Unstake
                         </button>:""}
                       
                       </td>
@@ -950,7 +961,7 @@ const StakingPage = () => {
                       <input
                         type="text"
                         id="amtInput"
-                        placeholder={`Min ${inputAmt}`}
+                        placeholder={`Min ${modalItem?.min_deposit}`}
                         onChange={onChange}
                         style={{
                           background: "#0E1725",
@@ -1215,7 +1226,7 @@ const StakingPage = () => {
                                 className="text-white"
                                 style={{ marginLeft: "16px" }}
                               >
-                                {val?.reward_bal * 1} KSN
+                                {val?.reward_bal* 1} KSN
                               </span>
                             </div>
 
@@ -1276,11 +1287,12 @@ const StakingPage = () => {
                               key={`claim` + index}
                               className="d-flex flex-wrap  flex-wrap  flex-wrap "
                             >
+                          
                               <button
                                 className="btn flex-grow-1 stake-btn"
                                 style={{ fontWeight: "800", fontSize: "24px" }}
                                 onClick={() => {
-                                  claim_reward(pId);
+                                  handleClaimReward(val.poolId);
                                 }}
                               >
                                 {!loading ? "Claim reward" : "Processing..."}
@@ -1295,7 +1307,7 @@ const StakingPage = () => {
                                 className="btn flex-grow-1 stake-btn"
                                 style={{ fontWeight: "800", fontSize: "24px" }}
                                 onClick={() => {
-                                  handleClaimReferralReward(pId);
+                                  handleClaimReferralReward(val.poolId);
                                 }}
                               >
                                 {!loading

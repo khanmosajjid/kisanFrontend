@@ -1,0 +1,309 @@
+html,
+body {
+  padding: 0;
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
+    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body{
+  background: #061018;
+}
+
+section h1{
+  font-size: 1.8rem;
+}
+
+header{
+  margin-bottom: 59px;
+}
+
+.text-white{
+  color: #FFFFFF;
+}
+
+.text-grey{
+  color: #AFBED0;
+}
+
+.text-light-grey{
+  color: #C7D2DA;
+}
+
+.text-green{
+  color: rgba(81, 235, 180, 1);
+}
+
+.navbar{
+  padding: 18px 20.56px 25px 53.73px;
+}
+
+.navbar-brand{
+  display: flex;
+  align-items: baseline;
+  margin-right: 71.99px;
+}
+
+.navbar-brand span img{
+  height: 100%;
+}
+
+.navbar-brand .flogo{
+  height: 19px;
+  margin-right: 10px;
+}
+
+.navbar-brand .logotext{
+  height: 16px;
+}
+.navbar #navbarNav ul{
+  background: #061018;
+  flex-grow: 1;
+}
+
+.navbar #navbarNav ul li{
+  margin-right: 30.33px;
+}
+
+.navbar-nav .active a{
+  color: #fff!important;
+}
+.navbar-nav .nav-item a{
+  color: #AFBED0;
+  font-weight: 600;
+}
+
+.connectWallet{
+  display: flex;
+  color: #fff;
+  background: #784FFE;
+  padding: 10.78px 32.28px;
+  border-radius: 4.44px;
+
+}
+
+
+/* info wrapper section  */
+.info-wrapper .portfolio_value{
+  background-color:rgba(139, 104, 253, 0.16);
+  color: #fff;
+  padding: 21px 40px;
+}
+
+.p_value_label{
+  font-size: 0.9rem;  
+}
+
+.p_value{
+  font-weight: 700;
+  font-size: 1.5rem;
+}
+
+.buy-coin-btn{
+  background: #784FFE;
+  border: 1px solid #784FFE;
+  border-radius: 5px;
+}
+.other-tokens{
+  padding: 30px 39.46px ;
+  background:rgba(11, 19, 30, 1);
+}
+
+.progress-container{
+  padding: 0 39.46px 40px;
+  background:rgba(11, 19, 30, 1);
+  margin-bottom: 63px;
+}
+
+.progress{
+  margin-bottom: 40px;
+}
+
+.other-tokens .token .tokenName{
+  width: fit-content;
+}
+
+.token{
+  margin-right: 92px;
+}
+
+.token .tokenName{
+  color:  #AFBED0;
+  font-weight: 400;
+}
+
+.token .tokenValue{
+  color: #fff;
+  font-weight: 600;
+  font-size: 22px;
+}
+
+.progress{
+  height: 11px;
+  border-radius: 0;
+}
+
+.claim-reward{
+  padding: 25px;
+  font-weight: 400; 
+  font-size: 0.9rem;
+}
+
+#eclipse_green{
+  height: 10px;
+  width: 10px;
+  margin-right: 8px;
+  background: #3FB68B!important;
+  border-radius: 50%;
+}
+
+#eclipse_blue{
+  height: 10px;
+  width: 10px;
+  margin-right: 8px;
+  background:  #51C6EB!important;
+  border-radius: 50%;
+}
+
+#eclipse_purple{
+  height: 10px;
+  width: 10px;
+  margin-right: 8px;
+  background: #A286FE!important;
+  border-radius: 50%;
+}
+
+.position-wrapper{
+  background: #0E1725;
+  border-radius: 4px;
+  align-items: center;
+}
+
+.claim-reward-btn{
+  background: #3FB68B;
+  padding: 16px;
+  font-weight: 600;
+  border-radius: 4px;
+}
+
+.staking-pool h2{
+  font-size: 1.3rem;
+  font-weight: 700;
+}
+
+.staking-pool-heading{
+  margin-bottom: 16px;
+}
+
+.staking-pool-table-wrapper{
+  padding: 26px 10px;
+}
+
+.table thead th{
+  border-bottom: 1px solid #132236;
+  border-top: none;
+  font-weight: 400;
+  padding: 25px 5px;
+}
+
+
+.table th, .table td{
+  border-bottom: 1px solid #132236;
+  font-weight: 600;
+}
+
+.stake-btn{
+  padding: 16px 32px;
+  background: #784FFE;
+  border-radius: 4px;
+  color: #FFFFFF;
+}
+
+/* modal  */
+
+.modal{
+  background: rgba(4, 11, 17, 0.95);
+  color: #fff;
+}
+
+.modal-content{
+  background: rgba(19, 34, 54, 1);
+  color: #fff;
+}
+
+.modal-header{
+  padding: 26.6px 64.8px;
+  border-bottom: 1px solid #132236;
+}
+
+.modal-body{
+  padding: 26.6px 64.8px;
+}
+
+.modal-title{
+  font-weight: 700;
+  font-size: 1.8rem;
+}
+
+.nav-pills{
+  background: #0E1725;
+  border: 1px solid #132236;
+  border-radius: 4px;
+  display: flex;
+  justify-content: space-between;
+  padding: 10px;
+  margin-bottom: 49px;
+}
+
+.nav-pills .nav-item{
+  flex-grow: 1;
+  text-align: center;
+}
+
+.nav-pills .nav-item .active{
+  background: #784FFE;
+  border-radius: 4px;
+}
+
+.nav-pills .nav-item a{
+  color: #fff;
+  font-weight: 500;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
+@media (min-width: 576px){
+  .modal-dialog {
+      max-width: 814px;
+      margin: 1.75rem auto;
+  } 
+}
+
+@media (max-width: 987px) {
+
+  .navbar{
+      padding: 18px 15.56px 25px 15.73px;
+  }
+  .navbar-brand{
+      margin-right: 0;
+  }
+  
+}
